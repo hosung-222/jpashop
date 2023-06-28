@@ -11,24 +11,29 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Catagory {
+public class Category {
     @Id @GeneratedValue
-    @Column(name = "catagory_id")
+    @Column(name = "category_id")
     private Long id;
 
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "catagory_item",
-            joinColumns = @JoinColumn(name = "catagory_id"),
+    @JoinTable(name = "category_item",
+            joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> items = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    private Catagory parent;
+    private Category parent;
 
     @OneToMany(mappedBy = "parent")
-    private List<Catagory> child = new ArrayList<>();
+    private List<Category> child = new ArrayList<>();
+
+    public void  addChildCategory(Category child){
+        this.child.add(child);
+        child.setParent(this);
+    }
 
 }
