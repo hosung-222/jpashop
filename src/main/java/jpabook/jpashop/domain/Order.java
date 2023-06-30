@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -13,6 +15,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Table(name = "orders")
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // new생성자 금지
 public class Order {
     @Id @GeneratedValue
     @Column(name = "order_id")
@@ -22,10 +25,10 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) //order persist하면 orderItem도 동시에 해줌
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)  //order persist하면 delivery 도 해줌
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
