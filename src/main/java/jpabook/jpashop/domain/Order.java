@@ -4,8 +4,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.bytebuddy.ByteBuddy;
 
 import javax.persistence.*;
+import java.net.Proxy;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
